@@ -3,11 +3,6 @@
 # Wireguard installation scripts and notes
 # https://github.com/jakeloftis/wireguard
 
-#!/bin/bash
-
-# Secure WireGuard server installer
-# https://github.com/angristan/wireguard-install
-
 RED='\033[0;31m'
 ORANGE='\033[0;33m'
 GREEN='\033[0;32m'
