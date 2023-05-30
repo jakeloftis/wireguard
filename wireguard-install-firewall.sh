@@ -186,7 +186,16 @@ PrivateKey = ${SERVER_PRIV_KEY}" >"/etc/wireguard/${SERVER_WG_NIC}.conf"
 	if pgrep firewalld; then
 		FIREWALLD_IPV4_ADDRESS=$(echo "${SERVER_WG_IPV4}" | cut -d"." -f1-3)".0"
 		FIREWALLD_IPV6_ADDRESS=$(echo "${SERVER_WG_IPV6}" | sed 's/:[^:]*$/:0/')
-		echo "PostUp = iptables -t nat -A POSTROUTING -s ${SERVER_WG_IPV4}/24 -o ${SERVER_PUB_NIC} -j MASQUERADE" >>"/etc/wireguard/${SERVER_WG_NIC}.conf"
+		echo "PostUp = iptables -t nat -A POSTROUTING -s ${SERVER_WG_IPV4}/24 -o ${SERVER_PUB_NIC} -j MASQUERADE
+		Postup = iptables -t nat -A PREROUTING -i enp1s0 -p tcp --dport 1024:51819 -j DNAT --to-destination 10.66.66.2:1024-51819
+		Postup = iptables -t nat -A PREROUTING -i enp1s0 -p udp --dport 1024:51819 -j DNAT --to-destination 10.66.66.2:1024-51819
+		Postup = iptables -t nat -A PREROUTING -i enp1s0 -p tcp --dport 51821:65535 -j DNAT --to-destination 10.66.66.2:51821-65535
+		Postup = iptables -t nat -A PREROUTING -i enp1s0 -p udp --dport 51819:65535 -j DNAT --to-destination 10.66.66.2:51821-65535
+		PostDown = iptables -t nat -A POSTROUTING -s ${SERVER_WG_IPV4}/24 -o ${SERVER_PUB_NIC} -j MASQUERADE
+		PostDown = iptables -t nat -A PREROUTING -i enp1s0 -p tcp --dport 1024:51819 -j DNAT --to-destination 10.66.66.2:1024-51819
+		PostDown = iptables -t nat -A PREROUTING -i enp1s0 -p udp --dport 1024:51819 -j DNAT --to-destination 10.66.66.2:1024-51819
+		PostDown = iptables -t nat -A PREROUTING -i enp1s0 -p tcp --dport 51821:65535 -j DNAT --to-destination 10.66.66.2:51821-65535
+		PostDown = iptables -t nat -A PREROUTING -i enp1s0 -p udp --dport 51819:65535 -j DNAT --to-destination 10.66.66.2:51821-65535" >>"/etc/wireguard/${SERVER_WG_NIC}.conf"
 	fi
 
 	# Enable routing on the server
