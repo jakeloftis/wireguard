@@ -84,7 +84,7 @@ function installQuestions() {
 	echo "Welcome to the WireGuard installer!"
 	echo "The installer I based this off of is located at: https://github.com/angristan/wireguard-install"
 	echo ""
-	echo "Setup Questions (leave empty for default)"
+	echo "Setup Questions (press enter for default)"
 	echo ""
 
 	# Detect public IPv4 or IPv6 address and pre-fill for the user
