@@ -87,7 +87,9 @@ Check your IP address at: https://www.whatismyip.com/
 
 # notes
 Example Server Config: https://github.com/jakeloftis/wireguard/blob/main/example-server-config.md  
+  
 Example Client Config: https://github.com/jakeloftis/wireguard/blob/main/example-client-config.md  
+  
 If you want to add, list, revoke, or uninstall Wireguard, you can access the menu by entering the following commands:  
 ```
 curl -O https://raw.githubusercontent.com/jakeloftis/wireguard/master/wireguard-install-open.sh
