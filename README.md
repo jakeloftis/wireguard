@@ -56,7 +56,14 @@ Change the "Save as type:" to "All files (*.*)"
 Save  
 
 # port forwarding examples <br />
-To forward a single port
+To forward a single port, you'll need to specify the following:  
+WAN Interface: In the example below, my WAN interface is enp1s0.  
+To check your interface in PuTTY, run the command:  
+```
+ip route show default | cut -d " " -f 5
+```
+Port: In the example below, port is 3074  
+IP Address and Port of client: In the example below, my Windows Wireguard Client and Port are 10.66.66.2:3074  
 ```
 iptables -t nat -A PREROUTING -i enp1s0 -p tcp --dport 3074 -j DNAT --to-destination 10.66.66.2:3074
 ```
@@ -64,6 +71,7 @@ To forward a range of ports
 ```
 iptables -t nat -A PREROUTING -i enp1s0 -p tcp --dport 3074:3079 -j DNAT --to-destination 10.66.66.2:3074-3079
 ```
+
 
 # download and install Windows Wireguard desktop app  
 https://www.wireguard.com/install/ > Download Windows Installer  
