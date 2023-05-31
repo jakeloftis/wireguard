@@ -46,7 +46,9 @@ Enter a client NAME you will remember
 # client config you will need for Windows Wireguard desktop app
 ```
 Run the command below and replace NAME_FROM_SETUP_WIZARD with the name you entered in the setup wizard
+```
 cat /root/wg0-client-NAME_FROM_SETUP_WIZARD.conf
+```
 Select all text and Copy/Paste to a Notepad file
 In Notepad, click File > Save
 Change the "File name:" to wgclient.conf
