@@ -55,14 +55,15 @@ Change the "File name:" to wgclient.conf
 Change the "Save as type:" to "All files (*.*)"  
 Save  
 
-# port forwarding examples <br />
+# port forwarding examples  
 To forward a single port, you'll need to specify your WAN interface, incoming port, and client IP address:port  
 WAN Interface: To check your WAN interface in PuTTY, run the command:  
 ```
 ip route show default | cut -d " " -f 5
 ```
 You should recieve an output with enp1s0, enp1s0, eth0, eth1, etc...  
-In the examples below, my WAN interface is enp1s0  
+  
+WAN Interface: In the examples below, my WAN Interface is enp1s0  
 Port: In the example below, port is 3074  
 IP Address and Port of client: In the example below, my Windows Wireguard Client and Port are 10.66.66.2:3074  
 ```
