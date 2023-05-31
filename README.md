@@ -18,7 +18,7 @@ I recommend the direct download Link for exe/portable version: https://the.earth
   
 Launch PuTTY  
 Log in to Vultr: https://my.vultr.com/  
-Select Server  
+Select your server (it may be called "Cloud Instance" by default)  
 Copy/Paste IP Address from Vultr to the "Host Name (or IP address)" text box in PuTTY  
 Click "Open"  
 Username: root  
