@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Wireguard installation scripts and notes
-# https://github.com/jakeloftis/wireguard
+# Secure WireGuard server installer
+# https://github.com/angristan/wireguard-install
 
 RED='\033[0;31m'
 ORANGE='\033[0;33m'
@@ -34,14 +34,35 @@ function checkVirt() {
 function checkOS() {
 	source /etc/os-release
 	OS="${ID}"
-	if [[ ${OS} == "ubuntu" ]]; then
+	if [[ ${OS} == "debian" || ${OS} == "raspbian" ]]; then
+		if [[ ${VERSION_ID} -lt 10 ]]; then
+			echo "Your version of Debian (${VERSION_ID}) is not supported. Please use Debian 10 Buster or later"
+			exit 1
+		fi
+		OS=debian # overwrite if raspbian
+	elif [[ ${OS} == "ubuntu" ]]; then
 		RELEASE_YEAR=$(echo "${VERSION_ID}" | cut -d'.' -f1)
 		if [[ ${RELEASE_YEAR} -lt 18 ]]; then
 			echo "Your version of Ubuntu (${VERSION_ID}) is not supported. Please use Ubuntu 18.04 or later"
 			exit 1
 		fi
+	elif [[ ${OS} == "fedora" ]]; then
+		if [[ ${VERSION_ID} -lt 32 ]]; then
+			echo "Your version of Fedora (${VERSION_ID}) is not supported. Please use Fedora 32 or later"
+			exit 1
+		fi
+	elif [[ ${OS} == 'centos' ]] || [[ ${OS} == 'almalinux' ]] || [[ ${OS} == 'rocky' ]]; then
+		if [[ ${VERSION_ID} == 7* ]]; then
+			echo "Your version of CentOS (${VERSION_ID}) is not supported. Please use CentOS 8 or later"
+			exit 1
+		fi
+	elif [[ -e /etc/oracle-release ]]; then
+		source /etc/os-release
+		OS=oracle
+	elif [[ -e /etc/arch-release ]]; then
+		OS=arch
 	else
-		echo "Looks like you aren't running this installer on Ubuntu"
+		echo "Looks like you aren't running this installer on a Debian, Ubuntu, Fedora, CentOS, AlmaLinux, Oracle or Arch Linux system"
 		exit 1
 	fi
 }
@@ -82,9 +103,10 @@ function initialCheck() {
 
 function installQuestions() {
 	echo "Welcome to the WireGuard installer!"
-	echo "The installer I based this off of is located at: https://github.com/angristan/wireguard-install"
+	echo "The git repository is available at: https://github.com/angristan/wireguard-install"
 	echo ""
-	echo "Setup Questions (leave empty for default)"
+	echo "I need to ask you a few questions before starting the setup."
+	echo "You can keep the default options and just press enter if you are ok with them."
 	echo ""
 
 	# Detect public IPv4 or IPv6 address and pre-fill for the user
@@ -114,6 +136,7 @@ function installQuestions() {
 	done
 
 	# Generate random number within private ports range
+	RANDOM_PORT=$(shuf -i49152-65535 -n1)
 	until [[ ${SERVER_PORT} =~ ^[0-9]+$ ]] && [ "${SERVER_PORT}" -ge 1 ] && [ "${SERVER_PORT}" -le 65535 ]; do
 		read -rp "Server WireGuard port [1-65535]: " -e -i 51820 SERVER_PORT
 	done
@@ -148,12 +171,39 @@ function installWireGuard() {
 	installQuestions
 
 	# Install WireGuard tools and module
-	if [[ ${OS} == 'ubuntu' ]]; then
+	if [[ ${OS} == 'ubuntu' ]] || [[ ${OS} == 'debian' && ${VERSION_ID} -gt 10 ]]; then
 		apt-get update
-		apt-get install -y wireguard qrencode
-	else
-		echo "Looks like you aren't running this installer on Ubuntu"
-		exit 1
+		apt-get install -y wireguard iptables resolvconf qrencode
+	elif [[ ${OS} == 'debian' ]]; then
+		if ! grep -rqs "^deb .* buster-backports" /etc/apt/; then
+			echo "deb http://deb.debian.org/debian buster-backports main" >/etc/apt/sources.list.d/backports.list
+			apt-get update
+		fi
+		apt update
+		apt-get install -y iptables resolvconf qrencode
+		apt-get install -y -t buster-backports wireguard
+	elif [[ ${OS} == 'fedora' ]]; then
+		if [[ ${VERSION_ID} -lt 32 ]]; then
+			dnf install -y dnf-plugins-core
+			dnf copr enable -y jdoss/wireguard
+			dnf install -y wireguard-dkms
+		fi
+		dnf install -y wireguard-tools iptables qrencode
+	elif [[ ${OS} == 'centos' ]] || [[ ${OS} == 'almalinux' ]] || [[ ${OS} == 'rocky' ]]; then
+		if [[ ${VERSION_ID} == 8* ]]; then
+			yum install -y epel-release elrepo-release
+			yum install -y kmod-wireguard
+			yum install -y qrencode # not available on release 9
+		fi
+		yum install -y wireguard-tools iptables
+	elif [[ ${OS} == 'oracle' ]]; then
+		dnf install -y oraclelinux-developer-release-el8
+		dnf config-manager --disable -y ol8_developer
+		dnf config-manager --enable -y ol8_developer_UEKR6
+		dnf config-manager --save -y --setopt=ol8_developer_UEKR6.includepkgs='wireguard-tools*'
+		dnf install -y wireguard-tools qrencode iptables
+	elif [[ ${OS} == 'arch' ]]; then
+		pacman -S --needed --noconfirm wireguard-tools qrencode
 	fi
 
 	# Make sure the directory exists (this does not seem the be the case on fedora)
@@ -183,35 +233,25 @@ Address = ${SERVER_WG_IPV4}/24,${SERVER_WG_IPV6}/64
 ListenPort = ${SERVER_PORT}
 PrivateKey = ${SERVER_PRIV_KEY}" >"/etc/wireguard/${SERVER_WG_NIC}.conf"
 
-
-FIREWALLD_IPV4_ADDRESS=$(echo "${SERVER_WG_IPV4}" | cut -d"." -f1-3)".0"
-FIREWALLD_IPV6_ADDRESS=$(echo "${SERVER_WG_IPV6}" | sed 's/:[^:]*$/:0/')
-
-iptables -P INPUT ACCEPT
-iptables -P FORWARD ACCEPT
-iptables -P OUTPUT ACCEPT
-iptables -F
-iptables -X
-iptables -t nat -F
-iptables -t nat -X
-iptables -t mangle -F
-iptables -t mangle -X
-iptables -t raw -F
-iptables -t raw -X
-iptables -t security -F
-iptables -t security -X
-
-echo "PostUp = iptables -t nat -A POSTROUTING -s ${SERVER_WG_IPV4}/24 -o ${SERVER_PUB_NIC} -j MASQUERADE
-PostUp = iptables -t nat -A PREROUTING -i ${SERVER_PUB_NIC} -p tcp --dport 1024:51819 -j DNAT --to-destination ${SERVER_WG_IPV4}:1024-51819
-PostUp = iptables -t nat -A PREROUTING -i ${SERVER_PUB_NIC} -p udp --dport 1024:51819 -j DNAT --to-destination ${SERVER_WG_IPV4}:1024-51819
-PostUp = iptables -t nat -A PREROUTING -i ${SERVER_PUB_NIC} -p tcp --dport 51821:65535 -j DNAT --to-destination ${SERVER_WG_IPV4}:51821-65535
-PostUp = iptables -t nat -A PREROUTING -i ${SERVER_PUB_NIC} -p udp --dport 51821:65535 -j DNAT --to-destination ${SERVER_WG_IPV4}:51821-65535
-PostDown =  = iptables -t nat -D POSTROUTING -s ${SERVER_WG_IPV4}/24 -o ${SERVER_PUB_NIC} -j MASQUERADE
-PostDown = iptables -t nat -A PREROUTING -i ${SERVER_PUB_NIC} -p tcp --dport 1024:51819 -j DNAT --to-destination ${SERVER_WG_IPV4}:1024-51819
-PostDown = iptables -t nat -A PREROUTING -i ${SERVER_PUB_NIC} -p udp --dport 1024:51819 -j DNAT --to-destination ${SERVER_WG_IPV4}:1024-51819
-PostDown = iptables -t nat -A PREROUTING -i ${SERVER_PUB_NIC} -p tcp --dport 51821:65535 -j DNAT --to-destination ${SERVER_WG_IPV4}:51821-65535
-PostDown = iptables -t nat -A PREROUTING -i ${SERVER_PUB_NIC} -p udp --dport 51821:65535 -j DNAT --to-destination ${SERVER_WG_IPV4}:51821-65535" >>"/etc/wireguard/${SERVER_WG_NIC}.conf"
-
+	if pgrep firewalld; then
+		FIREWALLD_IPV4_ADDRESS=$(echo "${SERVER_WG_IPV4}" | cut -d"." -f1-3)".0"
+		FIREWALLD_IPV6_ADDRESS=$(echo "${SERVER_WG_IPV6}" | sed 's/:[^:]*$/:0/')
+		echo "PostUp = firewall-cmd --add-port ${SERVER_PORT}/udp && firewall-cmd --add-rich-rule='rule family=ipv4 source address=${FIREWALLD_IPV4_ADDRESS}/24 masquerade' && firewall-cmd --add-rich-rule='rule family=ipv6 source address=${FIREWALLD_IPV6_ADDRESS}/24 masquerade'
+PostDown = firewall-cmd --remove-port ${SERVER_PORT}/udp && firewall-cmd --remove-rich-rule='rule family=ipv4 source address=${FIREWALLD_IPV4_ADDRESS}/24 masquerade' && firewall-cmd --remove-rich-rule='rule family=ipv6 source address=${FIREWALLD_IPV6_ADDRESS}/24 masquerade'" >>"/etc/wireguard/${SERVER_WG_NIC}.conf"
+	else
+		echo "PostUp = iptables -I INPUT -p udp --dport ${SERVER_PORT} -j ACCEPT
+PostUp = iptables -I FORWARD -i ${SERVER_PUB_NIC} -o ${SERVER_WG_NIC} -j ACCEPT
+PostUp = iptables -I FORWARD -i ${SERVER_WG_NIC} -j ACCEPT
+PostUp = iptables -t nat -A POSTROUTING -o ${SERVER_PUB_NIC} -j MASQUERADE
+PostUp = ip6tables -I FORWARD -i ${SERVER_WG_NIC} -j ACCEPT
+PostUp = ip6tables -t nat -A POSTROUTING -o ${SERVER_PUB_NIC} -j MASQUERADE
+PostDown = iptables -D INPUT -p udp --dport ${SERVER_PORT} -j ACCEPT
+PostDown = iptables -D FORWARD -i ${SERVER_PUB_NIC} -o ${SERVER_WG_NIC} -j ACCEPT
+PostDown = iptables -D FORWARD -i ${SERVER_WG_NIC} -j ACCEPT
+PostDown = iptables -t nat -D POSTROUTING -o ${SERVER_PUB_NIC} -j MASQUERADE
+PostDown = ip6tables -D FORWARD -i ${SERVER_WG_NIC} -j ACCEPT
+PostDown = ip6tables -t nat -D POSTROUTING -o ${SERVER_PUB_NIC} -j MASQUERADE" >>"/etc/wireguard/${SERVER_WG_NIC}.conf"
+	fi
 
 	# Enable routing on the server
 	echo "net.ipv4.ip_forward = 1
@@ -341,8 +381,6 @@ AllowedIPs = ${CLIENT_WG_IPV4}/32,${CLIENT_WG_IPV6}/128" >>"/etc/wireguard/${SER
 	fi
 
 	echo -e "${GREEN}Your client config file is in ${HOME_DIR}/${SERVER_WG_NIC}-client-${CLIENT_NAME}.conf${NC}"
-	
-	echo -e "${ORANGE}It is recommended that you reboot your system now."
 }
 
 function listClients() {
@@ -403,9 +441,23 @@ function uninstallWg() {
 
 		if [[ ${OS} == 'ubuntu' ]]; then
 			apt-get remove -y wireguard wireguard-tools qrencode
-	else
-		echo "Looks like you aren't running this installer on Ubuntu"
-		exit 1
+		elif [[ ${OS} == 'debian' ]]; then
+			apt-get remove -y wireguard wireguard-tools qrencode
+		elif [[ ${OS} == 'fedora' ]]; then
+			dnf remove -y --noautoremove wireguard-tools qrencode
+			if [[ ${VERSION_ID} -lt 32 ]]; then
+				dnf remove -y --noautoremove wireguard-dkms
+				dnf copr disable -y jdoss/wireguard
+			fi
+		elif [[ ${OS} == 'centos' ]] || [[ ${OS} == 'almalinux' ]] || [[ ${OS} == 'rocky' ]]; then
+			yum remove -y --noautoremove wireguard-tools
+			if [[ ${VERSION_ID} == 8* ]]; then
+				yum remove --noautoremove kmod-wireguard qrencode
+			fi
+		elif [[ ${OS} == 'oracle' ]]; then
+			yum remove --noautoremove wireguard-tools qrencode
+		elif [[ ${OS} == 'arch' ]]; then
+			pacman -Rs --noconfirm wireguard-tools qrencode
 		fi
 
 		rm -rf /etc/wireguard
