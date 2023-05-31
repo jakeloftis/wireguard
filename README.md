@@ -14,7 +14,8 @@ Deploy Now
 # Vultr VPS Login with PuTTY
 ```
 Download PuTTY at https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
-Link for exe/portable version: https://the.earth.li/~sgtatham/putty/latest/w64/putty.exe
+OR
+Direct Download Link for exe/portable version: https://the.earth.li/~sgtatham/putty/latest/w64/putty.exe
 Launch PuTTY
 Log in to Vultr: https://my.vultr.com/
 Select Server
