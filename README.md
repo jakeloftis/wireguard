@@ -37,7 +37,7 @@ chmod +x wireguard-install-open.sh
 ```
 ./wireguard-install-open.sh
 ```
-Press enter through each prompt that pops up until you're prompted for a client name 
+Press enter through each prompt that pops up until you're prompted for a client name  
 Enter a client NAME you will remember  
 If you encounter a (pink/purple) popup screen about out of date daemons or restarting daemons,  
 Use the arrow keys to navigate up and down, then press space bar to put a * next to each service  
