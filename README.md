@@ -27,7 +27,8 @@ Password: Copy/Paste password from Vultr server page (*Hint: Use right click to 
 
 # Wireguard installation on Vultr server 
 
-After installing Ubuntu 20.04, run the following 3 lines of code.
+After installing Ubuntu 20.04, copy, paste and press enter for the following 3 lines of code   
+(Hint: Use right click to paste each line into PuTTY)
 ```
 curl -O https://raw.githubusercontent.com/jakeloftis/wireguard/master/wireguard-install-open.sh
 ```
