@@ -83,4 +83,5 @@ Click "Add Tunnel"
 Navigate to the location you saved your wgclient.conf in Notepad  
 Click Open  
 Click "Activate"  
-You're done! Check your IP address at: https://www.whatismyip.com/
+You're done!  
+Check your IP address at: https://www.whatismyip.com/
