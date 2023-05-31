@@ -38,10 +38,8 @@ chmod +x wireguard-install-open.sh
 ```
 ./wireguard-install-open.sh
 ```
-```
 Press enter through each prompt that pops up until you reach the client name
-Enter a client NAME you will remember
-```
+Enter a client NAME you will remember  
 
 # client config you will need for Windows Wireguard desktop app
 Run the command below and replace NAME_FROM_SETUP_WIZARD with the name you entered in the setup wizard
