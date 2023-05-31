@@ -25,7 +25,7 @@ Username: root
 Password: Copy/Paste password from Vultr server page (*Hint: Use right click to paste into PuTTY)
 ```
 
-# wireguard installation on Vultr server 
+# Wireguard installation on Vultr server 
 
 After installing Ubuntu 20.04, run the following 3 lines of code.
 ```
@@ -44,12 +44,12 @@ Enter a client NAME you will remember
 
 # client config you will need for Windows Wireguard desktop app
 ```
-Run the following command and replace NAME_FROM_SETUP_WIZARD with the name you entered in the setup wizard
+Run the command below and replace NAME_FROM_SETUP_WIZARD with the name you entered in the setup wizard
 cat /root/wg0-client-NAME_FROM_SETUP_WIZARD.conf
 Select all text and Copy/Paste to a Notepad file
 In Notepad, click File > Save
 Change the "File name:" to wgclient.conf
-Change the "Save as type:" to all files
+Change the "Save as type:" to "All files (*.*)"
 Save
 ```
 
