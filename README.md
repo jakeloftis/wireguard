@@ -7,7 +7,7 @@ CPU & Storage Technology: Intel Regular Performance
 Server Location: Choose Server Location
 Server Image: Operating System > Ubuntu > 22.04  LTS  x64
 Server Size: 25 GB SSD $5/month
-Add AUto Backups: Optional
+Add Auto Backups: Optional
 Deploy Now
 ```
 
