@@ -1,6 +1,6 @@
-# Vultr VPS Server Deployment
+# Vultr VPS Server Deployment https://my.vultr.com/
 ```
-https://my.vultr.com/
+
 Deploy New Server
 Choose Server: Cloud Compute
 CPU & Storage Technology: Intel Regular Performance
