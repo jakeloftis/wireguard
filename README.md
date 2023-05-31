@@ -15,9 +15,9 @@ Deploy Now
 Download PuTTY at https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html  
 OR  
 I recommend Direct Download Link for exe/portable version: https://the.earth.li/~sgtatham/putty/latest/w64/putty.exe  
+  
 Launch PuTTY  
 Log in to Vultr: https://my.vultr.com/  
-  
 Select Server  
 Copy/Paste IP Address from Vultr to "Host Name (or IP address)" text box in PuTTY  
 Click "Open"  
