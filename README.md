@@ -1,3 +1,29 @@
+# Vultr VPS Server Deployment
+```
+https://my.vultr.com/
+Deploy New Server
+Choose Server: Cloud Compute
+CPU & Storage Technology: Intel Regular Performance
+Server Location: Choose Server Location
+Server Image: Operating System > Ubuntu > 22.04  LTS  x64
+Server Size: 25 GB SSD $5/month
+Add AUto Backups: Optional
+Deploy Now
+```
+
+# Vultr VPS Login with PuTTY
+```
+Download PuTTY at https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
+Link for exe/portable version: https://the.earth.li/~sgtatham/putty/latest/w64/putty.exe
+Launch PuTTY
+Log in to Vultr: https://my.vultr.com/
+Select Server
+Copy/Paste IP Address from Vultr to "Host Name (or IP address)" text box in PuTTY
+Click "Open"
+Username: root
+Password: Copy/Paste password from Vultr server page (*Hint: Use right click to paste into PuTTY)
+```
+
 # wireguard <br /> 
 Wireguard installation scripts and notes <br /> 
 
@@ -11,6 +37,7 @@ chmod +x wireguard-install-open.sh
 ```
 ./wireguard-install-open.sh
 ```
+
 # example server config located at "cat /etc/wireguard/wg0.conf"
 ```
 [Interface]
@@ -36,6 +63,7 @@ PublicKey = CLIENT_PUBLIC_KEY_HERE
 PresharedKey = PRESHARED_KEY_HERE
 AllowedIPs = 10.66.66.2/32,fd42:42:42::2/128
 ```
+
 # example client config located at "cat /root/wg0-client-NAME_FROM_SETUP_WIZARD.conf"
 ```
 [Interface]
