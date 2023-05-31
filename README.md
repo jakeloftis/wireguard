@@ -57,11 +57,11 @@ Save
 
 # port forwarding examples <br />
 To forward a single port, you'll need to specify the following:  
-WAN Interface: In the example below, my WAN interface is enp1s0.  
-To check your interface in PuTTY, run the command:  
+WAN Interface: To check your interface in PuTTY, run the command:  
 ```
 ip route show default | cut -d " " -f 5
 ```
+In the examples below, my WAN interface is enp1s0.  
 Port: In the example below, port is 3074  
 IP Address and Port of client: In the example below, my Windows Wireguard Client and Port are 10.66.66.2:3074  
 ```
