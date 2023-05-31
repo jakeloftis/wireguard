@@ -15,7 +15,7 @@ Deploy Now
 ```
 Download PuTTY at https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html
 OR
-Direct Download Link for exe/portable version: https://the.earth.li/~sgtatham/putty/latest/w64/putty.exe
+I recommend Direct Download Link for exe/portable version: https://the.earth.li/~sgtatham/putty/latest/w64/putty.exe
 Launch PuTTY
 Log in to Vultr: https://my.vultr.com/
 Select Server
@@ -25,8 +25,7 @@ Username: root
 Password: Copy/Paste password from Vultr server page (*Hint: Use right click to paste into PuTTY)
 ```
 
-# wireguard <br /> 
-Wireguard installation scripts and notes <br /> 
+# wireguard installation on Vultr server 
 
 After installing Ubuntu 20.04, run the following 3 lines of code.
 ```
@@ -38,6 +37,21 @@ chmod +x wireguard-install-open.sh
 ```
 ./wireguard-install-open.sh
 ```
+```
+Press enter through each prompt that pops up until you reach the client name
+Enter a client NAME you will remember
+```
+
+# client config you will need for Windows Wireguard desktop app
+```
+Run the following command and replace NAME_FROM_SETUP_WIZARD with the name you entered in the setup wizard
+cat /root/wg0-client-NAME_FROM_SETUP_WIZARD.conf
+Select all text and Copy/Paste to a Notepad file
+In Notepad, click File > Save
+Change the "File name:" to wgclient.conf
+Change the "Save as type:" to all files
+Save
+```
 
 # port forwarding examples <br />
 To forward a single port
@@ -47,4 +61,15 @@ iptables -t nat -A PREROUTING -i enp1s0 -p tcp --dport 3074 -j DNAT --to-destina
 To forward a range of ports
 ```
 iptables -t nat -A PREROUTING -i enp1s0 -p tcp --dport 3074:3079 -j DNAT --to-destination 10.66.66.2:3074:3079
+```
+
+# download and install Windows Wireguard desktop app
+```
+https://www.wireguard.com/install/ > Download Windows Installer
+Install the application
+Launch
+Click "Add Tunnel"
+Navigate to your wgclient.conf you saved in Notepad
+Click Open
+Click "Activate"
 ```
