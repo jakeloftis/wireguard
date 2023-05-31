@@ -44,5 +44,4 @@ PostDown = ip6tables -t nat -D POSTROUTING -o enp1s0 -j MASQUERADE
 PublicKey = CLIENT_PUBLIC_KEY_HERE
 PresharedKey = PdS7xPReW5zidJAphG/TvLsfRPp+ChEvmUV5bYIojWI=
 AllowedIPs = 10.66.66.2/32,fd42:42:42::2/128
-
 ```
