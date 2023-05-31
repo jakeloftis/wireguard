@@ -63,12 +63,10 @@ iptables -t nat -A PREROUTING -i enp1s0 -p tcp --dport 3074:3079 -j DNAT --to-de
 ```
 
 # download and install Windows Wireguard desktop app  
-https://www.wireguard.com/install/ > Download Windows Installer
-```
-Install the application
-Launch
-Click "Add Tunnel"
-Navigate to the location you saved your wgclient.conf in Notepad
-Click Open
-Click "Activate"
-```
+https://www.wireguard.com/install/ > Download Windows Installer  
+Install the application  
+Launch  
+Click "Add Tunnel"  
+Navigate to the location you saved your wgclient.conf in Notepad  
+Click Open  
+Click "Activate"  
