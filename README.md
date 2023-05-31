@@ -19,7 +19,7 @@ I recommend the direct download Link for exe/portable version: https://the.earth
 Launch PuTTY  
 Log in to Vultr: https://my.vultr.com/  
 Select Server  
-Copy/Paste IP Address from Vultr to "Host Name (or IP address)" text box in PuTTY  
+Copy/Paste IP Address from Vultr to the "Host Name (or IP address)" text box in PuTTY  
 Click "Open"  
 Username: root  
 Password: Copy/Paste password from Vultr server page into PuTTY password prompt (*Hint: Use right click to paste into PuTTY)  
