@@ -28,10 +28,10 @@ Password: Copy/Paste password from Vultr server page into PuTTY password prompt 
 
 After logging in to your Vultr server, run the 3 commands below by doing a copy/paste/enter sequence   
 (Hint: Use right click to paste each line into PuTTY)  
-Press enter through each prompt that pops up until you reach the client name
+Press enter through each prompt that pops up until you reach the client name  
 Enter a client NAME you will remember  
 If you encounter a popup screen about out of date daemons or restarting daemons,  
-Use the arrow keys and press space bar to put a * next to each service  
+Use the arrow keys to navigate up and down, then press space bar to put a * next to each service  
 Press tab to switch to okay and press enter  
 ```
 curl -O https://raw.githubusercontent.com/jakeloftis/wireguard/master/wireguard-install-open.sh
