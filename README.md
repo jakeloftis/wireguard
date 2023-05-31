@@ -12,7 +12,7 @@ Deploy Now
 ```
 
 # Vultr VPS Login with PuTTY  
-Download PuTTY at https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html  
+Download and install PuTTY at https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html  
 OR  
 I recommend Direct Download Link for exe/portable version: https://the.earth.li/~sgtatham/putty/latest/w64/putty.exe  
   
