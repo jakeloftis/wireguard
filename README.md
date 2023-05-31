@@ -39,7 +39,17 @@ chmod +x wireguard-install-open.sh
 ./wireguard-install-open.sh
 ```
 
-# example server config located at "cat /etc/wireguard/wg0.conf"
+# port forwarding examples <br />
+To forward a single port
+```
+iptables -t nat -A PREROUTING -i enp1s0 -p tcp --dport 3074 -j DNAT --to-destination 10.66.66.2:3074
+```
+To forward a range of ports
+```
+iptables -t nat -A PREROUTING -i enp1s0 -p tcp --dport 3074:3079 -j DNAT --to-destination 10.66.66.2:3074:3079
+```
+
+# NOT NEEDED - example server config located at "cat /etc/wireguard/wg0.conf"
 ```
 [Interface]
 Address = 10.66.66.1/24,fd42:42:42::1/64
@@ -65,7 +75,7 @@ PresharedKey = PRESHARED_KEY_HERE
 AllowedIPs = 10.66.66.2/32,fd42:42:42::2/128
 ```
 
-# example client config located at "cat /root/wg0-client-NAME_FROM_SETUP_WIZARD.conf"
+# NOT NEEDED - example client config located at "cat /root/wg0-client-NAME_FROM_SETUP_WIZARD.conf"
 ```
 [Interface]
 PrivateKey = CLIENT_PRIVATE_KEY_HERE
@@ -77,13 +87,4 @@ PublicKey = SERVER_PUBLIC_KEY_HERE
 PresharedKey = PRESHARED_KEY_HERE
 Endpoint = VPS_SERVER_IP_HERE:51820
 AllowedIPs = 0.0.0.0/0,::/0
-```
-# port forwarding examples <br />
-To forward a single port
-```
-iptables -t nat -A PREROUTING -i enp1s0 -p tcp --dport 3074 -j DNAT --to-destination 10.66.66.2:3074
-```
-To forward a range of ports
-```
-iptables -t nat -A PREROUTING -i enp1s0 -p tcp --dport 3074:3079 -j DNAT --to-destination 10.66.66.2:3074:3079
 ```
