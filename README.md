@@ -69,7 +69,7 @@ https://www.wireguard.com/install/ > Download Windows Installer
 Install the application
 Launch
 Click "Add Tunnel"
-Navigate to your wgclient.conf you saved in Notepad
+Navigate to the location you saved your wgclient.conf in Notepad
 Click Open
 Click "Activate"
 ```
