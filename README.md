@@ -63,9 +63,9 @@ To forward a range of ports
 iptables -t nat -A PREROUTING -i enp1s0 -p tcp --dport 3074:3079 -j DNAT --to-destination 10.66.66.2:3074:3079
 ```
 
-# download and install Windows Wireguard desktop app
-```
+# download and install Windows Wireguard desktop app  
 https://www.wireguard.com/install/ > Download Windows Installer
+```
 Install the application
 Launch
 Click "Add Tunnel"
