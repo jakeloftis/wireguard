@@ -42,7 +42,7 @@ PostDown = ip6tables -t nat -D POSTROUTING -o enp1s0 -j MASQUERADE
 ### Client NAME_FROM_SETUP_WIZARD
 [Peer]
 PublicKey = CLIENT_PUBLIC_KEY_HERE
-PresharedKey = PdS7xPReW5zidJAphG/TvLsfRPp+ChEvmUV5bYIojWI=
+PresharedKey = PRESHARED_KEY_HERE
 AllowedIPs = 10.66.66.2/32,fd42:42:42::2/128
 ```
 # example client config located at "cat /root/wg0-client-NAME_FROM_SETUP_WIZARD.conf"
