@@ -24,7 +24,8 @@ Select your server (it may be called "Cloud Instance" by default)
 Copy/Paste IP Address from Vultr to the "Host Name (or IP address)" text box in PuTTY  
 Click "Open"  
 Username: root  
-Password: Copy/Paste password from Vultr server page into PuTTY password prompt (*Hint: Use right click to paste into PuTTY)  
+Password: Copy/Paste password from Vultr server page into PuTTY password prompt  
+(*Hint: Use right click to paste into PuTTY)  
 
 # Wireguard installation on Vultr server 
 
