@@ -66,6 +66,7 @@ You should recieve an output with enp1s0, enp1s0, eth0, eth1, etc...
   
 WAN Interface: In the examples below, my WAN Interface is enp1s0  
 Port: In the example below, port is 3074  
+  
 IP Address and Port of client: In the example below, my Windows Wireguard Client and Port are 10.66.66.2:3074  
 ```
 iptables -t nat -A PREROUTING -i enp1s0 -p tcp --dport 3074 -j DNAT --to-destination 10.66.66.2:3074
