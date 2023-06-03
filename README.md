@@ -68,7 +68,7 @@ You should recieve an output with enp1s0, enp1s0, eth0, eth1, etc...
   
 WAN Interface: In the examples below, my WAN Interface is enp1s0  
 Port: In the example below, port is 3074  
-IP Address and Port of client: In the example below, my Windows Wireguard Client and Port are 10.66.66.2:3074  
+IP Address and Port of client: In the example below, I'm forwarding to the windows Wireguard Client at 10.66.66.2 on port 3074 
   
 ```
 iptables -t nat -A PREROUTING -i enp1s0 -p tcp --dport 3074 -j DNAT --to-destination 10.66.66.2:3074
@@ -84,6 +84,15 @@ iptables -t nat -A PREROUTING -i enp1s0 -p tcp --dport 1024:51819 -j DNAT --to-d
 iptables -t nat -A PREROUTING -i enp1s0 -p udp --dport 1024:51819 -j DNAT --to-destination 10.66.66.2:1024-51819
 iptables -t nat -A PREROUTING -i enp1s0 -p tcp --dport 51821:65535 -j DNAT --to-destination 10.66.66.2:51821-65535
 iptables -t nat -A PREROUTING -i enp1s0 -p udp --dport 51821:65535 -j DNAT --to-destination 10.66.66.2:51821-65535
+```
+
+# deleting port forwards (change the -A to -D)
+```
+iptables -t nat -D PREROUTING -i enp1s0 -p tcp --dport 3074 -j DNAT --to-destination 10.66.66.2:3074
+```
+To forward a range of ports
+```
+iptables -t nat -D PREROUTING -i enp1s0 -p tcp --dport 3074:3079 -j DNAT --to-destination 10.66.66.2:3074-3079
 ```
 
 # view port forwarding rules in effect
