@@ -94,6 +94,13 @@ To forward a range of ports
 ```
 iptables -t nat -D PREROUTING -i enp1s0 -p tcp --dport 3074:3079 -j DNAT --to-destination 10.66.66.2:3074-3079
 ```
+Deleting forwarding all ports for gaming (not necessarily secure but works for open NAT)
+```
+iptables -t nat -D PREROUTING -i enp1s0 -p tcp --dport 1024:51819 -j DNAT --to-destination 10.66.66.2:1024-51819
+iptables -t nat -D PREROUTING -i enp1s0 -p udp --dport 1024:51819 -j DNAT --to-destination 10.66.66.2:1024-51819
+iptables -t nat -D PREROUTING -i enp1s0 -p tcp --dport 51821:65535 -j DNAT --to-destination 10.66.66.2:51821-65535
+iptables -t nat -D PREROUTING -i enp1s0 -p udp --dport 51821:65535 -j DNAT --to-destination 10.66.66.2:51821-65535
+```
 
 # view port forwarding rules in effect
 ```
