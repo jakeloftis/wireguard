@@ -78,7 +78,7 @@ To forward a range of ports
 iptables -t nat -A PREROUTING -i enp1s0 -p tcp --dport 3074:3079 -j DNAT --to-destination 10.66.66.2:3074-3079
 ```
 
-Forwarding all ports for gaming (not necessarily secure but works for open NAT)
+Forwarding all ports for gaming except Wireguard port 51820 (not necessarily secure but works for open NAT)
 ```
 iptables -t nat -A PREROUTING -i enp1s0 -p tcp --dport 1024:51819 -j DNAT --to-destination 10.66.66.2:1024-51819
 iptables -t nat -A PREROUTING -i enp1s0 -p udp --dport 1024:51819 -j DNAT --to-destination 10.66.66.2:1024-51819
@@ -94,7 +94,7 @@ To forward a range of ports
 ```
 iptables -t nat -D PREROUTING -i enp1s0 -p tcp --dport 3074:3079 -j DNAT --to-destination 10.66.66.2:3074-3079
 ```
-Deleting forwarding all ports for gaming (not necessarily secure but works for open NAT)
+Deleting forwarding all ports for gaming except Wireguard port 51820 (not necessarily secure but works for open NAT)
 ```
 iptables -t nat -D PREROUTING -i enp1s0 -p tcp --dport 1024:51819 -j DNAT --to-destination 10.66.66.2:1024-51819
 iptables -t nat -D PREROUTING -i enp1s0 -p udp --dport 1024:51819 -j DNAT --to-destination 10.66.66.2:1024-51819
