@@ -95,6 +95,8 @@ You're done!
 Check your IP address at: https://www.whatismyip.com/
 
 # notes
+Port forwarding rules will reset each time you reboot your Ubuntu server  
+
 Example Server Config: https://github.com/jakeloftis/wireguard/blob/main/example-server-config.md  
   
 Example Client Config: https://github.com/jakeloftis/wireguard/blob/main/example-client-config.md  
