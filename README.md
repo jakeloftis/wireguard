@@ -25,12 +25,12 @@ Copy/Paste IP Address from Vultr to the "Host Name (or IP address)" text box in 
 Click "Open"  
 Username: root  
 Password: Copy/Paste password from Vultr server page into PuTTY password prompt  
-(*Hint: Use right click to paste into PuTTY)  
+(*Hint: Use right click to paste into PuTTY command line)  
 
 # Wireguard installation on Vultr server 
 
 After logging in to your Vultr server, run the 3 commands below by doing a copy/paste/enter sequence   
-(Hint: Use right click to paste each line into PuTTY)  
+(*Hint: Use right click to paste each line into PuTTY command line)  
 ```
 curl -O https://raw.githubusercontent.com/jakeloftis/wireguard/master/wireguard-install-open.sh
 ```
