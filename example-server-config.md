@@ -25,6 +25,7 @@ AllowedIPs = 10.66.66.2/32,fd42:42:42::2/128
 ```
 
 # to remove ipv6 capabilities
+(delete ,fd42:42:42::1/64 and ,fd42:42:42::2/128)
 
 ```
 [Interface]
