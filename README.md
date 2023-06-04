@@ -135,3 +135,22 @@ chmod +x wireguard-install-open.sh
 ```
 ./wireguard-install-open.sh
 ```
+
+# to be added
+
+"persistant" ip tables when wireguard interface is up can be created in the following manner  
+```
+nano /etc/wireguard/wg0.conf
+```
+```
+PreUp = iptables -t nat -A PREROUTING -i enp1s0 -p tcp --dport 1024:51819 -j DNAT --to-destination 10.66.66.2:1024-51819
+PreUp = iptables -t nat -A PREROUTING -i enp1s0 -p udp --dport 1024:51819 -j DNAT --to-destination 10.66.66.2:1024-51819
+PreUp = iptables -t nat -A PREROUTING -i enp1s0 -p tcp --dport 51821:65535 -j DNAT --to-destination 10.66.66.2:51821-65535
+PreUp = iptables -t nat -A PREROUTING -i enp1s0 -p udp --dport 51821:65535 -j DNAT --to-destination 10.66.66.2:51821-65535
+```
+```
+PreDown = iptables -t nat -D PREROUTING -i enp1s0 -p tcp --dport 1024:51819 -j DNAT --to-destination 10.66.66.2:1024-51819
+PreDown = iptables -t nat -D PREROUTING -i enp1s0 -p udp --dport 1024:51819 -j DNAT --to-destination 10.66.66.2:1024-51819
+PreDown = iptables -t nat -D PREROUTING -i enp1s0 -p tcp --dport 51821:65535 -j DNAT --to-destination 10.66.66.2:51821-65535
+PreDown = iptables -t nat -D PREROUTING -i enp1s0 -p udp --dport 51821:65535 -j DNAT --to-destination 10.66.66.2:51821-65535
+```
