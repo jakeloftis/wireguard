@@ -156,7 +156,7 @@ PreDown = iptables -t nat -D PREROUTING -i enp1s0 -p tcp --dport 51821:65535 -j 
 PreDown = iptables -t nat -D PREROUTING -i enp1s0 -p udp --dport 51821:65535 -j DNAT --to-destination 10.66.66.2:51821-65535
 ```
 
-allowed ip's to maintain access to LAN network  
+Client/Windows Desktop App: Allowed ip's to maintain access to LAN network  
 
 Router: 192.168.0.1
 ```
