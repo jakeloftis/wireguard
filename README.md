@@ -43,6 +43,7 @@ chmod +x wireguard-install-open.sh
 
 
 Press enter through each of the following prompts
+```
 IPv4 or IPv6 public address: VULTR-SERVER-IP-ADDRESS-WILL-BE-HERE
 Public interface: enp1s0
 WireGuard interface name: wg0
@@ -53,7 +54,8 @@ First DNS resolver to use for the clients: 1.1.1.1
 Second DNS resolver to use for the clients (optional): 1.0.0.1
 
 WireGuard uses a parameter called AllowedIPs to determine what is routed over the VPN.
-Allowed IPs list for generated clients (leave default to route everything): 0.0.0.0/0,::/0 
+Allowed IPs list for generated clients (leave default to route everything): 0.0.0.0/0,::/0
+```
 
 After the installation completes, you will be prompted to enter a client NAME you will remember  
 If you encounter a (pink/purple) popup screen about out of date daemons or restarting daemons,  
