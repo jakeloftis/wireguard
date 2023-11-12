@@ -57,7 +57,16 @@ WireGuard uses a parameter called AllowedIPs to determine what is routed over th
 Allowed IPs list for generated clients (leave default to route everything): 0.0.0.0/0,::/0
 ```
 
-After the installation completes, you will be prompted to enter a client NAME you will remember  
+After the installation completes you will be promted with
+```
+Client configuration
+
+The client name must consist of alphanumeric character(s). It may also include underscores or dashes and can't exceed 15 chars.
+Client name: ENTER-CLIENT-NAME-OF-YOUR-CHOICE
+Client WireGuard IPv4: 10.66.66.2
+Client WireGuard IPv6: fd42:42:42::2
+
+```
 If you encounter a (pink/purple) popup screen about out of date daemons or restarting daemons,  
 Use the arrow keys to navigate up and down, then press space bar to put a * next to each service  
 Press tab to switch to okay and press enter  
