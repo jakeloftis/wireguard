@@ -142,7 +142,7 @@ Navigate to the location you saved your wgclient.conf in Notepad
 Click Open  
 Click "Activate"  
 You're done!  
-Check your IP address at: https://www.whatismyip.com/
+Check your IP address at: https://www.whatismyip.com/  
 You can check the wireguard connection and handshake status on your Vultr Ubuntu server by entering the following
 ```
 wg show wg0
