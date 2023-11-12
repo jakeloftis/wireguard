@@ -143,6 +143,10 @@ Click Open
 Click "Activate"  
 You're done!  
 Check your IP address at: https://www.whatismyip.com/
+You can check the wireguard connection and handshake status on your Vultr Ubuntu server by entering the following
+```
+wg show wg0
+```
 
 # notes
 Port forwarding rules will reset each time you reboot your Ubuntu server  
