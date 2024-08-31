@@ -167,6 +167,26 @@ chmod +x wireguard-install-open.sh
 ```
 
 # to be added
+2024 IPTables Update
+````
+iptables -t nat -A PREROUTING -i eth0 -p udp --dport 1024:51819 -j DNAT --to-destination 10.0.0.2
+iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 1024:51819 -j DNAT --to-destination 10.0.0.2
+iptables -t nat -A POSTROUTING -s 10.0.0.2/32 -p udp --sport 1024:51819 -o eth0 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 10.0.0.2/32 -p tcp --sport 1024:51819 -o eth0 -j MASQUERADE
+
+
+iptables -t nat -A PREROUTING -i eth0 -p udp --dport 51821:65535 -j DNAT --to-destination 10.0.0.2
+iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 51821:65535 -j DNAT --to-destination 10.0.0.2
+iptables -t nat -A POSTROUTING -s 10.0.0.2/32 -p udp --sport 51821:65535 -o eth0 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 10.0.0.2/32 -p tcp --sport 51821:65535 -o eth0 -j MASQUERADE
+
+
+sudo apt-get install iptables-persistent netfilter-persistent
+
+netfilter-persistent save
+
+reboot
+````
 
 "persistant" ip tables when wireguard interface is up can be created in the following manner  
 ```
