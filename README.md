@@ -169,7 +169,7 @@ chmod +x wireguard-install-open.sh
 # to be added
 2024 Update
 ````
-wget https://github.com/jakeloftis/wireguard/blob/main/wg-gaming-installer.sh
+wget https://raw.githubusercontent.com/jakeloftis/wireguard/master/wg-gaming-installer.sh
 bash ./wg-gaming-installer.sh
 
 wget https://raw.githubusercontent.com/xiahualiu/wg_gaming_installer/main/wg-gaming-installer.sh 
