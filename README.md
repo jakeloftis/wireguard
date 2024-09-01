@@ -28,6 +28,11 @@ Password: Copy/Paste password from Vultr server page into PuTTY password prompt
 (*Hint: Use right click to paste into PuTTY command line)  
 
 # Wireguard installation on Vultr server 
+Use this: Forward all ports
+```
+wget https://raw.githubusercontent.com/jakeloftis/wireguard/master/wg-gaming-installer.sh
+bash ./wg-gaming-installer.sh
+```
 
 After logging in to your Vultr server, run the 3 commands below by doing a copy/paste/enter sequence   
 (*Hint: Use right click to paste each line into PuTTY command line)  
